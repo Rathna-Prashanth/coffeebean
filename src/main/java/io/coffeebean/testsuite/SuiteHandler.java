@@ -2,9 +2,14 @@ package io.coffeebean.testsuite;
 
 import io.coffeebean.bdd.report.CoffeeBeanReport;
 import io.coffeebean.bdd.report.internals.CoffeeBeanReportHandler;
+import io.coffeebean.browser.WebBrowser;
 import io.coffeebean.interactions.DriverAction;
 import io.coffeebean.interactions.DriverExtension;
 import io.coffeebean.logging.profiler.EventLogs;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class SuiteHandler implements TestSuite {
     public static CoffeeBeanReport mreport = new CoffeeBeanReportHandler();
@@ -28,9 +33,22 @@ public class SuiteHandler implements TestSuite {
     }
 
     @Override
-    public TestSuite createScenario(String scenarioName) {
+    public TestSuite createScenario(WebBrowser browser,String scenarioName) {
         EventLogs.log("Scenario : " + scenarioName);
         mreport.reportCreateScenario(scenarioName);
+        switch (browser){
+            case ChromeBrowser:
+                WebDriverManager.chromedriver().setup();
+                DriverExtension.setmDriver(new ChromeDriver());
+                break;
+            case FirefoxBrowser:
+                WebDriverManager.firefoxdriver().setup();
+                DriverExtension.setmDriver(new FirefoxDriver());
+                break;
+            case EdgeBrowser:
+                WebDriverManager.edgedriver().setup();
+                DriverExtension.setmDriver(new EdgeDriver());
+        }
         return testSuite;
     }
 
@@ -43,6 +61,7 @@ public class SuiteHandler implements TestSuite {
 
     @Override
     public TestSuite end() {
+        DriverExtension.getmDriver().quit();
         return testSuite;
     }
 
