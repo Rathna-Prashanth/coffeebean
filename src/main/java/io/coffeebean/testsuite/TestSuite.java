@@ -4,10 +4,10 @@ import io.coffeebean.browser.WebBrowser;
 import io.coffeebean.interactions.DriverAction;
 
 public interface TestSuite {
-    public TestSuite testSuite = new SuiteHandler();
 
     /**
      * Name of your test suite
+     *
      * @param suiteName Name of your test suite
      * @return A self reference
      */
@@ -15,6 +15,7 @@ public interface TestSuite {
 
     /**
      * Feature name
+     *
      * @param featureName Feature name
      * @return A self reference
      */
@@ -22,13 +23,15 @@ public interface TestSuite {
 
     /**
      * Scenario Name
+     *
      * @param scenarioName Scenario Name
      * @return A self reference
      */
-    public TestSuite createScenario(WebBrowser browser,String scenarioName);
+    public TestSuite createScenario(WebBrowser browser, String scenarioName);
 
     /**
      * Gherkin Step Name
+     *
      * @param stepName Step Name example: Given:User open the application
      * @return A self reference
      */
@@ -36,6 +39,7 @@ public interface TestSuite {
 
     /**
      * End of scenario and listen to next scenario
+     *
      * @return A self reference
      */
     public TestSuite end();

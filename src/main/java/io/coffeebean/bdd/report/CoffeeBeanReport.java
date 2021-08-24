@@ -1,7 +1,6 @@
 package io.coffeebean.bdd.report;
 
 import com.aventstack.extentreports.ExtentReports;
-import io.coffeebean.bdd.report.internals.CoffeeBeanReportHandler;
 
 import java.util.List;
 

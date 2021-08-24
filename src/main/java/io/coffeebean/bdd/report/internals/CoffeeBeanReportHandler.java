@@ -8,6 +8,7 @@ import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.ViewName;
+import io.coffeebean.CoffeeBeanOptions;
 import io.coffeebean.bdd.report.CoffeeBeanReport;
 import io.coffeebean.logging.profiler.EventLogs;
 
@@ -114,11 +115,7 @@ public class CoffeeBeanReportHandler implements CoffeeBeanReport {
     @Override
     public void reportCreateFeature(String title) {
         feature = extent.createTest(Feature.class, title);
-//		if (AppEngine.isCloudExecution) {
-//			test.assignDevice("SeeTest Cloud Device");
-//		} else {
-//			test.assignDevice(config.getProperty("deviceName"));
-//		}
+        feature.assignDevice(CoffeeBeanOptions.deviceName);
     }
 
     @Override
@@ -264,5 +261,4 @@ public class CoffeeBeanReportHandler implements CoffeeBeanReport {
     public void reportStepExpection(Exception e) {
         step.fail(e);
     }
-
 }

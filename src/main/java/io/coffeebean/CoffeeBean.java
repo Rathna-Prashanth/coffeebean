@@ -6,12 +6,13 @@ import io.coffeebean.testsuite.TestSuite;
 
 public interface CoffeeBean {
 
- TestSuite testSuite = new SuiteHandler().getTestSuite();
+    TestSuite testSuite = new SuiteHandler();
 
     /**
      * Initialize coffeebean engine.
      * Use extended APIs to create testSuite, feature, scenario and step
      * Look for Detail level documentation on rathnaprashanth.com/coffeebean
+     *
      * @return TestSuite
      */
     public static TestSuite initialize() {
@@ -23,9 +24,8 @@ public interface CoffeeBean {
      * @param url URL of webpage to open
      * @return TestSuite
      */
-    public static TestSuite setURL(String url){
-        CoffeeBeanOptions.URL=url;
+    public static TestSuite setURL(String url) {
+        CoffeeBeanOptions.URL = url;
         return testSuite;
     }
-
 }

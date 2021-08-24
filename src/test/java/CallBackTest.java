@@ -7,9 +7,10 @@ public class CallBackTest {
 
     @Test
     public void initCallBack() {
-
         CoffeeBeanOptions.URL="https://www.google.co.in/";
-        CoffeeBean.initialize().createTestSuite("CoffeeBean Unit Test")
+        CoffeeBeanOptions.deviceName="Windows Browser";
+        CoffeeBean.initialize()
+                .createTestSuite("CoffeeBean Unit Test")
                 .createFeature("initCallBack")
                 .createScenario(WebBrowser.ChromeBrowser,"Check Callback")
                 .createStep("Given:User open google")
@@ -30,5 +31,4 @@ public class CallBackTest {
                 .end().endTestSuite();
 
     }
-
 }

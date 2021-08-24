@@ -1,10 +1,6 @@
 package io.coffeebean.interactions;
 
-import com.aventstack.extentreports.util.Assert;
 import io.coffeebean.CoffeeBeanOptions;
-
-import static org.junit.Assert.*;
-
 import io.coffeebean.logging.profiler.EventLogs;
 import io.coffeebean.testsuite.SuiteHandler;
 import io.coffeebean.testsuite.TestSuite;
@@ -12,30 +8,43 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
-import java.util.concurrent.TimeUnit;
+import static org.junit.Assert.assertEquals;
 
 public class DriverExtension extends SuiteHandler implements DriverAction {
 
-    private static WebDriver mDriver;
-    private static Boolean isFailure = false;
+    private WebDriver mDriver;
+    private Boolean isFailure = false;
+    private SuiteHandler mSuite;
 
-    public static Boolean getIsFailure() {
+    public DriverExtension(SuiteHandler mSuite) {
+        this.mSuite = mSuite;
+        this.mDriver = mSuite.mDriver;
+        this.mDriver.get(CoffeeBeanOptions.URL);
+    }
+
+    public Boolean getIsFailure() {
         return isFailure;
     }
 
-    public static void setIsFailure(Boolean isFailure) {
-        DriverExtension.isFailure = isFailure;
+    public Boolean getIsFailure(SuiteHandler suite) {
+        suite.isFailure = this.isFailure;
+        return this.isFailure;
     }
 
-    public static void setmDriver(WebDriver mDriver) {
-        DriverExtension.mDriver = mDriver;
-        DriverExtension.mDriver.get(CoffeeBeanOptions.URL);
+    public void setIsFailure(Boolean isFailure) {
+        this.isFailure = isFailure;
     }
 
-    public static WebDriver getmDriver() {
-        return mDriver;
+    public void setmDriver(WebDriver mDriver) {
+        this.mDriver = mDriver;
+        this.mDriver.get(CoffeeBeanOptions.URL);
+    }
+
+    public WebDriver getmDriver() {
+        return this.mDriver;
     }
 
     private WebElement getWebElement(String locator) {
@@ -72,7 +81,7 @@ public class DriverExtension extends SuiteHandler implements DriverAction {
 
     @Override
     public DriverAction click(String locator) {
-        if (!isFailure) {
+        if (!mSuite.isFailure) {
             try {
                 WebElement webElement = waitForElement(locator);
                 ((JavascriptExecutor) mDriver).executeScript("arguments[0].scrollIntoView(true);", webElement);
@@ -82,75 +91,75 @@ public class DriverExtension extends SuiteHandler implements DriverAction {
                     e.printStackTrace();
                 }
                 webElement.click();
-                return actions;
+                return this;
             } catch (Exception e) {
                 EventLogs.log("Exception : " + e);
-                isFailure = true;
-                mreport.reportStepExpection(e);
-                return actions;
+                mSuite.isFailure = true;
+                mSuite.mReport.reportStepExpection(e);
+                return this;
             }
         } else {
             EventLogs.log("Skipping Click : " + locator.split(":")[1]);
-            return actions;
+            return this;
         }
     }
 
     @Override
     public DriverAction sendKeys(String locator, String value) {
-        if (!isFailure) {
+        if (!mSuite.isFailure) {
             try {
                 waitForElement(locator).sendKeys(value);
-                return actions;
+                return this;
             } catch (Exception e) {
                 EventLogs.log("Exception : " + e);
-                isFailure = true;
-                mreport.reportStepExpection(e);
-                return actions;
+                mSuite.isFailure = true;
+                mSuite.mReport.reportStepExpection(e);
+                return this;
             }
         } else {
             EventLogs.log("Skipping Sendkeys : " + locator.split(":")[1]);
-            return actions;
+            return this;
         }
     }
 
     @Override
     public DriverAction assertElementText(String locator, String expected) {
-        if (!isFailure) {
+        if (!mSuite.isFailure) {
             try {
                 assertEquals(expected, waitForElement(locator).getText());
-                return actions;
+                return this;
             } catch (Exception e) {
                 EventLogs.log("Exception : " + e);
-                isFailure = true;
-                mreport.reportStepExpection(e);
-                return actions;
+                mSuite.isFailure = true;
+                mSuite.mReport.reportStepExpection(e);
+                return this;
             }
         } else {
             EventLogs.log("Skipping Assert : " + locator.split(":")[1]);
-            return actions;
+            return this;
         }
     }
 
     @Override
     public DriverAction createStep(String stepName) {
-        if (!isFailure) {
+        if (!mSuite.isFailure) {
             EventLogs.log("Step : " + stepName);
-            mreport.createStep(stepName.split(":")[0],
+            mSuite.mReport.createStep(stepName.split(":")[0],
                     stepName.split(":")[1]);
-            return new DriverExtension().actions;
+            return new DriverExtension(mSuite);
         } else {
-            mreport.createStep(stepName.split(":")[0],
+            mSuite.mReport.createStep(stepName.split(":")[0],
                     stepName.split(":")[1]);
-            mreport.reportStepSkip();
+            mSuite.mReport.reportStepSkip();
             EventLogs.log("Skiiping Step : " + stepName.split(":")[1]);
-            return new DriverExtension().actions;
+            return new DriverExtension(mSuite);
         }
     }
 
     @Override
     public TestSuite end() {
-        isFailure = false;
-        DriverExtension.getmDriver().quit();
-        return new SuiteHandler().getTestSuite();
+        mSuite.isFailure = false;
+        getmDriver().quit();
+        return mSuite;
     }
 }

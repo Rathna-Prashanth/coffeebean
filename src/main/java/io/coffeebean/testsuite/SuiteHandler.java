@@ -7,78 +7,78 @@ import io.coffeebean.interactions.DriverAction;
 import io.coffeebean.interactions.DriverExtension;
 import io.coffeebean.logging.profiler.EventLogs;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class SuiteHandler implements TestSuite {
-    public static CoffeeBeanReport mreport = new CoffeeBeanReportHandler();
 
-    public TestSuite getTestSuite() {
-        return testSuite;
-    }
+    public CoffeeBeanReport mReport = new CoffeeBeanReportHandler();
+    public WebDriver mDriver;
+    public Boolean isFailure = false;
 
     @Override
     public TestSuite createTestSuite(String suiteName) {
         EventLogs.log("Suite : " + suiteName);
-        mreport.reportEngine(suiteName);
-        return testSuite;
+        mReport.reportEngine(suiteName);
+        return this;
     }
 
     @Override
     public TestSuite createFeature(String featureName) {
         EventLogs.log("Feature : " + featureName);
-        mreport.reportCreateFeature(featureName);
-        return testSuite;
+        mReport.reportCreateFeature(featureName);
+        return this;
     }
 
     @Override
     public TestSuite createScenario(WebBrowser browser, String scenarioName) {
         EventLogs.log("Scenario : " + scenarioName);
-        mreport.reportCreateScenario(scenarioName);
+        mReport.reportCreateScenario(scenarioName);
         switch (browser) {
             case ChromeBrowser:
                 EventLogs.log("Chrome Browser : " + scenarioName);
                 WebDriverManager.chromedriver().setup();
-                DriverExtension.setmDriver(new ChromeDriver());
+                mDriver = new ChromeDriver();
                 break;
             case FirefoxBrowser:
                 EventLogs.log("Firefox Browser : " + scenarioName);
                 WebDriverManager.firefoxdriver().setup();
-                DriverExtension.setmDriver(new FirefoxDriver());
+                mDriver = new FirefoxDriver();
                 break;
             case EdgeBrowser:
                 EventLogs.log("Edge Browser : " + scenarioName);
                 WebDriverManager.edgedriver().setup();
-                DriverExtension.setmDriver(new EdgeDriver());
+                mDriver = new EdgeDriver();
         }
-        return testSuite;
+        return this;
     }
 
     @Override
     public DriverAction createStep(String stepName) {
-        if (!DriverExtension.getIsFailure()) {
+        if (!isFailure) {
             EventLogs.log("Step : " + stepName);
-            mreport.createStep(stepName.split(":")[0], stepName.split(":")[1]);
-            return new DriverExtension().actions;
+            mReport.createStep(stepName.split(":")[0], stepName.split(":")[1]);
+            return new DriverExtension(this);
         } else {
-            mreport.createStep(stepName.split(":")[0],
+            mReport.createStep(stepName.split(":")[0],
                     stepName.split(":")[1]);
-            mreport.reportStepSkip();
+            mReport.reportStepSkip();
             EventLogs.log("Skiiping Step : " + stepName.split(":")[1]);
-            return new DriverExtension().actions;
+            return new DriverExtension(this);
         }
     }
 
     @Override
     public TestSuite end() {
-        DriverExtension.getmDriver().quit();
-        DriverExtension.setIsFailure(false);
-        return testSuite;
+        this.mDriver.quit();
+        new DriverExtension(this).setIsFailure(false);
+        return this;
     }
 
     @Override
     public void endTestSuite() {
-        mreport.reportCooldown();
+        mReport.reportCooldown();
     }
 }

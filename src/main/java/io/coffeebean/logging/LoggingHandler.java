@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public interface LoggingHandler {
 
-    public static LoggingHandler initialize(){
+    public static LoggingHandler initialize() {
         try {
             EventLogs.initialize();
         } catch (IOException e) {
