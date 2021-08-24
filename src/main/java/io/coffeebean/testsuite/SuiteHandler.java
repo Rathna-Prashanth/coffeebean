@@ -33,19 +33,22 @@ public class SuiteHandler implements TestSuite {
     }
 
     @Override
-    public TestSuite createScenario(WebBrowser browser,String scenarioName) {
+    public TestSuite createScenario(WebBrowser browser, String scenarioName) {
         EventLogs.log("Scenario : " + scenarioName);
         mreport.reportCreateScenario(scenarioName);
-        switch (browser){
+        switch (browser) {
             case ChromeBrowser:
+                EventLogs.log("Chrome Browser : " + scenarioName);
                 WebDriverManager.chromedriver().setup();
                 DriverExtension.setmDriver(new ChromeDriver());
                 break;
             case FirefoxBrowser:
+                EventLogs.log("Firefox Browser : " + scenarioName);
                 WebDriverManager.firefoxdriver().setup();
                 DriverExtension.setmDriver(new FirefoxDriver());
                 break;
             case EdgeBrowser:
+                EventLogs.log("Edge Browser : " + scenarioName);
                 WebDriverManager.edgedriver().setup();
                 DriverExtension.setmDriver(new EdgeDriver());
         }
@@ -54,14 +57,23 @@ public class SuiteHandler implements TestSuite {
 
     @Override
     public DriverAction createStep(String stepName) {
-        EventLogs.log("Step : " + stepName);
-        mreport.createStep(stepName.split(":")[0],stepName.split(":")[1]);
-        return new DriverExtension().actions;
+        if (!DriverExtension.getIsFailure()) {
+            EventLogs.log("Step : " + stepName);
+            mreport.createStep(stepName.split(":")[0], stepName.split(":")[1]);
+            return new DriverExtension().actions;
+        } else {
+            mreport.createStep(stepName.split(":")[0],
+                    stepName.split(":")[1]);
+            mreport.reportStepSkip();
+            EventLogs.log("Skiiping Step : " + stepName.split(":")[1]);
+            return new DriverExtension().actions;
+        }
     }
 
     @Override
     public TestSuite end() {
         DriverExtension.getmDriver().quit();
+        DriverExtension.setIsFailure(false);
         return testSuite;
     }
 

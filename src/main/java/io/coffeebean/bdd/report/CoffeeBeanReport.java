@@ -7,58 +7,60 @@ import java.util.List;
 
 public interface CoffeeBeanReport {
 
-	void reportCreateFeature(String title);
+    void reportCreateFeature(String title);
 
-	void reportFeatureLog(String info);
+    void reportFeatureLog(String info);
 
-	void reportFeatureLogPass(String info);
+    void reportFeatureLogPass(String info);
 
-	void reportFeatureLogFatal(String Info);
+    void reportFeatureLogFatal(String Info);
 
-	void reportFeatureLogList(List<Object> items);
+    void reportFeatureLogList(List<Object> items);
 
-	void reportFeatureAssignCategory(String category);
+    void reportFeatureAssignCategory(String category);
 
-	void reportCreateScenario(String Detail);
+    void reportCreateScenario(String Detail);
 
-	void reportScenarioLogJSON(String Json);
+    void reportScenarioLogJSON(String Json);
 
-	void reportScenarioLogLabelColor(String info);
+    void reportScenarioLogLabelColor(String info);
 
-	void reportScenarioCategory(String[] category);
+    void reportScenarioCategory(String[] category);
 
-	void reportScenarioPass(String Details, String s);
+    void reportScenarioPass(String Details, String s);
 
-	void reportScenarioPass(String Details);
+    void reportScenarioPass(String Details);
 
-	void reportScenarioFail(String Details);
+    void reportScenarioFail(String Details);
 
-	void reportScenarioFail(String Details, String s);
+    void reportScenarioFail(String Details, String s);
 
-	void reportScenarioExpection(Exception e);
+    void reportScenarioExpection(Exception e);
 
-	void createStep(String keyword, String stepName);
+    void createStep(String keyword, String stepName);
 
-	void reportStepLogJSON(String Json);
+    void reportStepLogJSON(String Json);
 
-	void reportStepLogLabelColor(String info);
+    void reportStepLogLabelColor(String info);
 
-	void reportStepCategory(String[] category);
+    void reportStepCategory(String[] category);
 
-	void reportStepPass(String Details, String s);
+    void reportStepPass(String Details, String s);
 
-	void reportStepPass(String Details);
+    void reportStepPass(String Details);
 
-	void reportStepFail(String Details);
+    void reportStepFail(String Details);
 
-	void reportStepFail(String Details, String s);
+    void reportStepFail(String Details, String s);
 
-	void reportStepExpection(Exception e);
+    void reportStepSkip();
 
-	ExtentReports reportEngine(String suiteName);
+    void reportStepExpection(Exception e);
 
-	void reportCooldown();
+    ExtentReports reportEngine(String suiteName);
 
-	void changeReporConfig();
+    void reportCooldown();
+
+    void changeReporConfig();
 
 }

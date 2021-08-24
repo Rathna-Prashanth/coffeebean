@@ -1,24 +1,6 @@
 package io.coffeebean.bdd.report.internals;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.Scanner;
-
-import io.coffeebean.bdd.report.CoffeeBeanReport;
-import io.coffeebean.logging.profiler.EventLogs;
-
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.GherkinKeyword;
-import com.aventstack.extentreports.MediaEntityBuilder;
-import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.*;
 import com.aventstack.extentreports.gherkin.model.Feature;
 import com.aventstack.extentreports.gherkin.model.Scenario;
 import com.aventstack.extentreports.markuputils.CodeLanguage;
@@ -26,6 +8,13 @@ import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.ViewName;
+import io.coffeebean.bdd.report.CoffeeBeanReport;
+import io.coffeebean.logging.profiler.EventLogs;
+
+import java.io.*;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Scanner;
 
 public class CoffeeBeanReportHandler implements CoffeeBeanReport {
     private static String ReportPath, WorkingDirectory, ReportDirectory;
@@ -160,7 +149,7 @@ public class CoffeeBeanReportHandler implements CoffeeBeanReport {
     @Override
     public void reportCreateScenario(String Scenario) {
         scenario = feature.createNode(Scenario.class, Scenario);
-        scenario.assignAuthor("Rathna_Prashanth");
+        scenario.assignAuthor("CoffeeBean Report");
     }
 
     @Override
@@ -264,6 +253,11 @@ public class CoffeeBeanReportHandler implements CoffeeBeanReport {
     @Override
     public void reportStepFail(String Details, String s) {
         step.fail(Details, MediaEntityBuilder.createScreenCaptureFromBase64String(s).build());
+    }
+
+    @Override
+    public void reportStepSkip() {
+        step.skip("Previous step failed");
     }
 
     @Override

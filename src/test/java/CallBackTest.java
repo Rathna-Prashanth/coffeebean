@@ -1,7 +1,6 @@
 import io.coffeebean.CoffeeBean;
 import io.coffeebean.CoffeeBeanOptions;
 import io.coffeebean.browser.WebBrowser;
-import io.coffeebean.testsuite.TestSuite;
 import org.junit.Test;
 
 public class CallBackTest {
@@ -21,14 +20,15 @@ public class CallBackTest {
                 .createStep("And:User click SDET")
                 .click("XPATH://h3[contains(text(),'SDET')]")
                 .end()
-            /*    .createFeature("initCallBack")
+                .createFeature("initCallBack")
                 .createScenario(WebBrowser.FirefoxBrowser,"Check Callback")
                 .createStep("Given:User open google")
                 .createStep("And:User enter search text")
                 .sendKeys("XPATH://input","Rathna Prashanth")
                 .createStep("Given:User click search")
                 .click("XPATH:(//input[@value='Google Search'])[2]")
-                .end()*/.endTestSuite();
+                .end().endTestSuite();
 
     }
+
 }
