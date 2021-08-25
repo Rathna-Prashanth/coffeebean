@@ -61,5 +61,4 @@ public interface CoffeeBeanReport {
     void reportCooldown();
 
     void changeReporConfig();
-
 }

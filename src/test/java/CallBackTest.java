@@ -29,6 +29,5 @@ public class CallBackTest {
                 .createStep("Given:User click search")
                 .click("XPATH:(//input[@value='Google Search'])[2]")
                 .end().endTestSuite();
-
     }
 }

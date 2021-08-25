@@ -8,6 +8,28 @@
     <artifactId>coffeebean</artifactId>
     <version>0.0.1-alpha</version>
 
+    <issueManagement>
+        <url>https://github.com/Rathna-Prashanth/coffeebean/issues</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
+
+    <licenses>
+        <license>
+            <name>Apache-2.0 License</name>
+            <url>http://www.apache.org/licenses/</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <email>rathnaprashanth.m@gmail.com</email>
+            <name>Rathna Prashanth</name>
+            <url>https://github.com/Rathna-Prashanth</url>
+            <id>Rathna-Prashanth</id>
+        </developer>
+    </developers>
+
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
@@ -57,4 +79,14 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
+
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>coffeebean</name>
+            <url>https://maven.pkg.github.com/Rathna-Prashanth/coffeebean</url>
+        </repository>
+    </distributionManagement>
+
 </project>
