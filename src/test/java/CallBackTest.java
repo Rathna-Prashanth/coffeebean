@@ -1,11 +1,13 @@
 import io.coffeebean.CoffeeBean;
 import io.coffeebean.CoffeeBeanOptions;
 import io.coffeebean.browser.WebBrowser;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class CallBackTest {
 
     @Test
+    @Ignore
     public void initCallBack() {
         CoffeeBeanOptions.URL="https://www.google.co.in/";
         CoffeeBeanOptions.deviceName="Windows Browser";
