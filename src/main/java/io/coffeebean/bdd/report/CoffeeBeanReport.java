@@ -1,6 +1,8 @@
 package io.coffeebean.bdd.report;
 
 import com.aventstack.extentreports.ExtentReports;
+import io.coffeebean.CoffeeBeanOptions;
+import io.coffeebean.browser.WebBrowser;
 
 import java.util.List;
 
@@ -18,7 +20,7 @@ public interface CoffeeBeanReport {
 
     void reportFeatureAssignCategory(String category);
 
-    void reportCreateScenario(String Detail);
+    void reportCreateScenario(String Detail, WebBrowser browser);
 
     void reportScenarioLogJSON(String Json);
 

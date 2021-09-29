@@ -35,7 +35,7 @@ public class SuiteHandler implements TestSuite {
     @Override
     public TestSuite createScenario(WebBrowser browser, String scenarioName) {
         EventLogs.log("Scenario : " + scenarioName);
-        mReport.reportCreateScenario(scenarioName);
+        mReport.reportCreateScenario(scenarioName, browser);
         switch (browser) {
             case ChromeBrowser:
                 EventLogs.log("Chrome Browser : " + scenarioName);

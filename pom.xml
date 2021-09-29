@@ -6,7 +6,7 @@
 
     <groupId>io.coffeebean</groupId>
     <artifactId>coffeebean</artifactId>
-    <version>0.0.1-alpha</version>
+    <version>0.0.2-alpha</version>
 
     <issueManagement>
         <url>https://github.com/Rathna-Prashanth/coffeebean/issues</url>
@@ -100,5 +100,4 @@
             <url>https://maven.pkg.github.com/Rathna-Prashanth/coffeebean</url>
         </repository>
     </distributionManagement>
-
 </project>
