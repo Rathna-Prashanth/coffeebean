@@ -1,0 +1,10 @@
+unnamed package
+io.coffeebean
+io.coffeebean.bdd.report
+io.coffeebean.bdd.report.internals
+io.coffeebean.browser
+io.coffeebean.interactions
+io.coffeebean.internals
+io.coffeebean.logging
+io.coffeebean.logging.profiler
+io.coffeebean.testsuite
