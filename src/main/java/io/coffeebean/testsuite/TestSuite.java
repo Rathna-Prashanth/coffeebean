@@ -1,7 +1,7 @@
 package io.coffeebean.testsuite;
 
 import io.coffeebean.browser.WebBrowser;
-import io.coffeebean.interactions.DriverAction;
+import io.coffeebean.interactions.Interactive;
 
 public interface TestSuite {
 
@@ -35,7 +35,7 @@ public interface TestSuite {
      * @param stepName Step Name example: Given:User open the application
      * @return A self reference
      */
-    public DriverAction createStep(String stepName);
+    public Interactive createStep(String stepName);
 
     /**
      * End of scenario and listen to next scenario

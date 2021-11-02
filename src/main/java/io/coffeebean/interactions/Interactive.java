@@ -2,8 +2,7 @@ package io.coffeebean.interactions;
 
 import io.coffeebean.testsuite.TestSuite;
 
-public interface DriverAction {
-
+public interface Interactive extends DropDown, Action, Frame, Window,MouseAction,Assert {
     /**
      * Click the element provided
      *
@@ -12,7 +11,7 @@ public interface DriverAction {
      *                XPATH://td/a
      * @return A self reference
      */
-    public DriverAction click(String locator);
+    public Interactive click(String locator);
 
     /**
      * Enter value on element provided
@@ -23,14 +22,9 @@ public interface DriverAction {
      * @param value   Value to enter on field
      * @return A self reference
      */
-    public DriverAction sendKeys(String locator, String value);
+    public Interactive sendKeys(String locator, String value);
 
-    /**
-     * @param locator  Element to get text
-     * @param expected Expected value to assert
-     * @return A self reference
-     */
-    public DriverAction assertElementText(String locator, String expected);
+
 
     /**
      * Stepname for the scenario
@@ -40,7 +34,7 @@ public interface DriverAction {
      *                 And:User view login page
      * @return A self reference
      */
-    public DriverAction createStep(String stepName);
+    public Interactive createStep(String stepName);
 
     /**
      * End current scenario and listen for next scenario

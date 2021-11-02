@@ -9,7 +9,7 @@ import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class EventLogs implements LoggingHandler {
+public final class EventLogs implements LoggingHandler {
     public static Model model;
 
     public static LoggingHandler initialize() throws IOException, XmlPullParserException {

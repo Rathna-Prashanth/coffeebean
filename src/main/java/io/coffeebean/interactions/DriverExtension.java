@@ -5,6 +5,7 @@ import io.coffeebean.logging.profiler.EventLogs;
 import io.coffeebean.testsuite.SuiteHandler;
 import io.coffeebean.testsuite.TestSuite;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 
@@ -13,11 +14,11 @@ import java.util.function.Function;
 
 import static org.junit.Assert.assertEquals;
 
-public class DriverExtension extends SuiteHandler implements DriverAction {
+public class DriverExtension extends SuiteHandler {
 
-    private WebDriver mDriver;
-    private Boolean isFailure = false;
-    private SuiteHandler mSuite;
+    protected WebDriver mDriver;
+    protected Boolean isFailure = false;
+    protected SuiteHandler mSuite;
 
     public DriverExtension(SuiteHandler mSuite) {
         this.mSuite = mSuite;
@@ -66,7 +67,7 @@ public class DriverExtension extends SuiteHandler implements DriverAction {
         }
     }
 
-    private WebElement waitForElement(String locator) {
+    protected WebElement waitForElement(String locator) {
         Wait wait = new FluentWait(mDriver).withTimeout(60, TimeUnit.SECONDS)
                 .pollingEvery(5, TimeUnit.SECONDS)
                 .ignoring(NoSuchElementException.class)
@@ -79,8 +80,7 @@ public class DriverExtension extends SuiteHandler implements DriverAction {
         return element;
     }
 
-    @Override
-    public DriverAction click(String locator) {
+    public Interactive click(String locator) {
         if (!mSuite.isFailure) {
             try {
                 WebElement webElement = waitForElement(locator);
@@ -91,72 +91,68 @@ public class DriverExtension extends SuiteHandler implements DriverAction {
                     e.printStackTrace();
                 }
                 webElement.click();
-                return this;
+                return (Interactive) this;
             } catch (Exception e) {
                 EventLogs.log("Exception : " + e);
                 mSuite.isFailure = true;
                 mSuite.mReport.reportStepExpection(e);
-                return this;
+                return (Interactive) this;
             }
         } else {
             EventLogs.log("Skipping Click : " + locator.split(":")[1]);
-            return this;
+            return (Interactive) this;
         }
     }
 
-    @Override
-    public DriverAction sendKeys(String locator, String value) {
+    public Interactive sendKeys(String locator, String value) {
         if (!mSuite.isFailure) {
             try {
                 waitForElement(locator).sendKeys(value);
-                return this;
+                return (Interactive) this;
             } catch (Exception e) {
                 EventLogs.log("Exception : " + e);
                 mSuite.isFailure = true;
                 mSuite.mReport.reportStepExpection(e);
-                return this;
+                return (Interactive) this;
             }
         } else {
             EventLogs.log("Skipping Sendkeys : " + locator.split(":")[1]);
-            return this;
+            return (Interactive) this;
         }
     }
 
-    @Override
-    public DriverAction assertElementText(String locator, String expected) {
+    public Interactive assertElementText(String locator, String expected) {
         if (!mSuite.isFailure) {
             try {
                 assertEquals(expected, waitForElement(locator).getText());
-                return this;
+                return (Interactive) this;
             } catch (Exception e) {
                 EventLogs.log("Exception : " + e);
                 mSuite.isFailure = true;
                 mSuite.mReport.reportStepExpection(e);
-                return this;
+                return (Interactive) this;
             }
         } else {
             EventLogs.log("Skipping Assert : " + locator.split(":")[1]);
-            return this;
+            return (Interactive) this;
         }
     }
 
-    @Override
-    public DriverAction createStep(String stepName) {
+    public Interactive createStep(String stepName) {
         if (!mSuite.isFailure) {
             EventLogs.log("Step : " + stepName);
             mSuite.mReport.createStep(stepName.split(":")[0],
                     stepName.split(":")[1]);
-            return new DriverExtension(mSuite);
+            return (Interactive) new DriverExtension(mSuite);
         } else {
             mSuite.mReport.createStep(stepName.split(":")[0],
                     stepName.split(":")[1]);
             mSuite.mReport.reportStepSkip();
             EventLogs.log("Skiiping Step : " + stepName.split(":")[1]);
-            return new DriverExtension(mSuite);
+            return (Interactive) new DriverExtension(mSuite);
         }
     }
 
-    @Override
     public TestSuite end() {
         mSuite.isFailure = false;
         getmDriver().quit();

@@ -3,8 +3,9 @@ package io.coffeebean.testsuite;
 import io.coffeebean.bdd.report.CoffeeBeanReport;
 import io.coffeebean.bdd.report.internals.CoffeeBeanReportHandler;
 import io.coffeebean.browser.WebBrowser;
-import io.coffeebean.interactions.DriverAction;
 import io.coffeebean.interactions.DriverExtension;
+import io.coffeebean.interactions.Interactive;
+import io.coffeebean.interactions.InteractiveExtension;
 import io.coffeebean.logging.profiler.EventLogs;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -56,17 +57,17 @@ public class SuiteHandler implements TestSuite {
     }
 
     @Override
-    public DriverAction createStep(String stepName) {
+    public Interactive createStep(String stepName) {
         if (!isFailure) {
             EventLogs.log("Step : " + stepName);
             mReport.createStep(stepName.split(":")[0], stepName.split(":")[1]);
-            return new DriverExtension(this);
+            return new InteractiveExtension(this);
         } else {
             mReport.createStep(stepName.split(":")[0],
                     stepName.split(":")[1]);
             mReport.reportStepSkip();
             EventLogs.log("Skiiping Step : " + stepName.split(":")[1]);
-            return new DriverExtension(this);
+            return new InteractiveExtension(this);
         }
     }
 
