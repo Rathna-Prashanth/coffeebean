@@ -6,7 +6,7 @@
 
     <groupId>io.coffeebean</groupId>
     <artifactId>coffeebean</artifactId>
-    <version>0.0.2-alpha</version>
+    <version>0.0.3-alpha</version>
 
     <issueManagement>
         <url>https://github.com/Rathna-Prashanth/coffeebean/issues</url>
