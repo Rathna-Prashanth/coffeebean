@@ -181,7 +181,7 @@ public final class InteractiveExtension extends DriverExtension implements Inter
     }
 
     @Override
-    public Interactive switchtoDefault() {
+    public Interactive switchToDefault() {
         if (!mSuite.isFailure) {
             try {
                 mDriver.switchTo().defaultContent();

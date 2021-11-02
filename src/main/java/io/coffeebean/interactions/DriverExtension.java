@@ -143,13 +143,13 @@ public class DriverExtension extends SuiteHandler {
             EventLogs.log("Step : " + stepName);
             mSuite.mReport.createStep(stepName.split(":")[0],
                     stepName.split(":")[1]);
-            return (Interactive) new DriverExtension(mSuite);
+            return new InteractiveExtension(mSuite);
         } else {
             mSuite.mReport.createStep(stepName.split(":")[0],
                     stepName.split(":")[1]);
             mSuite.mReport.reportStepSkip();
             EventLogs.log("Skiiping Step : " + stepName.split(":")[1]);
-            return (Interactive) new DriverExtension(mSuite);
+            return new InteractiveExtension(mSuite);
         }
     }
 

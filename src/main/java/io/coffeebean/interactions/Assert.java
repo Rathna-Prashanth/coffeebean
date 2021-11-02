@@ -12,8 +12,23 @@ public interface Assert {
      * @return A self reference
      */
     public Interactive assertElementText(String locator, String expected);
+
+    /**
+     * @param locator Element to be checked
+     * @return A self reference
+     */
     public Interactive assertElementPresent(String locator);
+
+    /**
+     * @param locator Element to be checked
+     * @return A self reference
+     */
     public Interactive assertButtonCheck(String locator);
+
+    /**
+     * @param title Title to assert
+     * @return A self reference
+     */
     public Interactive assertTitle(String title);
 
     /**
