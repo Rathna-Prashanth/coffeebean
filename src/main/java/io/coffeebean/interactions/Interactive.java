@@ -1,8 +1,8 @@
 package io.coffeebean.interactions;
 
-import io.coffeebean.testsuite.TestSuite;
+import io.coffeebean.testsuite.ITestSuite;
 
-public interface Interactive extends DropDown, Action, Frame, Window,MouseAction,Assert {
+public interface Interactive extends DropDown, Action, Frame, Window,MouseAction,Assert,View {
     /**
      * Click the element provided
      *
@@ -41,5 +41,5 @@ public interface Interactive extends DropDown, Action, Frame, Window,MouseAction
      *
      * @return A self reference
      */
-    public TestSuite end();
+    public ITestSuite end();
 }

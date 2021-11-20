@@ -2,10 +2,9 @@ package io.coffeebean.interactions;
 
 import io.coffeebean.CoffeeBeanOptions;
 import io.coffeebean.logging.profiler.EventLogs;
+import io.coffeebean.testsuite.ITestSuite;
 import io.coffeebean.testsuite.SuiteHandler;
-import io.coffeebean.testsuite.TestSuite;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 
@@ -19,11 +18,12 @@ public class DriverExtension extends SuiteHandler {
     protected WebDriver mDriver;
     protected Boolean isFailure = false;
     protected SuiteHandler mSuite;
+    private int globalExplicitWait = 60;
+    private int globalPolling = 5;
 
     public DriverExtension(SuiteHandler mSuite) {
         this.mSuite = mSuite;
         this.mDriver = mSuite.mDriver;
-        this.mDriver.get(CoffeeBeanOptions.URL);
     }
 
     public Boolean getIsFailure() {
@@ -39,16 +39,16 @@ public class DriverExtension extends SuiteHandler {
         this.isFailure = isFailure;
     }
 
-    public void setmDriver(WebDriver mDriver) {
+    protected void setmDriver(WebDriver mDriver) {
         this.mDriver = mDriver;
         this.mDriver.get(CoffeeBeanOptions.URL);
     }
 
-    public WebDriver getmDriver() {
+    protected WebDriver getmDriver() {
         return this.mDriver;
     }
 
-    private WebElement getWebElement(String locator) {
+    protected WebElement getWebElement(String locator) {
         switch (locator.split(":")[0]) {
             case "ID":
                 return mDriver.findElement(By.id(locator.split(":")[1]));
@@ -68,8 +68,8 @@ public class DriverExtension extends SuiteHandler {
     }
 
     protected WebElement waitForElement(String locator) {
-        Wait wait = new FluentWait(mDriver).withTimeout(60, TimeUnit.SECONDS)
-                .pollingEvery(5, TimeUnit.SECONDS)
+        Wait wait = new FluentWait(mDriver).withTimeout(globalExplicitWait, TimeUnit.SECONDS)
+                .pollingEvery(globalPolling, TimeUnit.SECONDS)
                 .ignoring(NoSuchElementException.class)
                 .ignoring(TimeoutException.class);
         WebElement element = (WebElement) wait.until(new Function<WebDriver, WebElement>() {
@@ -84,12 +84,6 @@ public class DriverExtension extends SuiteHandler {
         if (!mSuite.isFailure) {
             try {
                 WebElement webElement = waitForElement(locator);
-                ((JavascriptExecutor) mDriver).executeScript("arguments[0].scrollIntoView(true);", webElement);
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 webElement.click();
                 return (Interactive) this;
             } catch (Exception e) {
@@ -153,7 +147,7 @@ public class DriverExtension extends SuiteHandler {
         }
     }
 
-    public TestSuite end() {
+    public ITestSuite end() {
         mSuite.isFailure = false;
         getmDriver().quit();
         return mSuite;

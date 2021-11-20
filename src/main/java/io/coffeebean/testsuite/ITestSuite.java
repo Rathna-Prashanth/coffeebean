@@ -3,7 +3,7 @@ package io.coffeebean.testsuite;
 import io.coffeebean.browser.WebBrowser;
 import io.coffeebean.interactions.Interactive;
 
-public interface TestSuite {
+public interface ITestSuite {
 
     /**
      * Name of your test suite
@@ -11,7 +11,7 @@ public interface TestSuite {
      * @param suiteName Name of your test suite
      * @return A self reference
      */
-    public TestSuite createTestSuite(String suiteName);
+    public ITestSuite createTestSuite(String suiteName);
 
     /**
      * Feature name
@@ -19,7 +19,7 @@ public interface TestSuite {
      * @param featureName Feature name
      * @return A self reference
      */
-    public TestSuite createFeature(String featureName);
+    public ITestSuite createFeature(String featureName);
 
     /**
      * Scenario Name
@@ -27,7 +27,7 @@ public interface TestSuite {
      * @param scenarioName Scenario Name
      * @return A self reference
      */
-    public TestSuite createScenario(WebBrowser browser, String scenarioName);
+    public ITestSuite createScenario(WebBrowser browser, String scenarioName);
 
     /**
      * Gherkin Step Name
@@ -42,7 +42,7 @@ public interface TestSuite {
      *
      * @return A self reference
      */
-    public TestSuite end();
+    public ITestSuite end();
 
     /**
      * End complete test suite. Test suite report will be generated under test-output folder

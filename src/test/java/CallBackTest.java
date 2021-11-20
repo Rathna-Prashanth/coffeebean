@@ -17,19 +17,20 @@ public class CallBackTest {
                 .createScenario(WebBrowser.ChromeBrowser, "Check Callback")
                 .createStep("Given:User open google")
                 .createStep("And:User enter search text")
-                .sendKeys("XPATH://input", "Rathna Prashanth SDET")
+                .sendKeys("XPATH://input", "Rathna Prashanth")
                 .createStep("Given:User click search")
-                .click("XPATH:(//input[@value='Google Search'])")
+                .click("XPATH:(//input[@value='Google Search'])[2]")
                 .createStep("And:User click SDET")
+//                .moveToView("XPATH://h3[contains(text(),'SDET')]")
                 .click("XPATH://h3[contains(text(),'SDET')]")
                 .end()
-                .createFeature("initCallBack")
+             /*   .createFeature("initCallBack")
                 .createScenario(WebBrowser.FirefoxBrowser, "Check Callback")
                 .createStep("Given:User open google")
                 .createStep("And:User enter search text")
                 .sendKeys("XPATH://input", "Rathna Prashanth")
                 .createStep("Given:User click search")
                 .click("XPATH:(//input[@value='Google Search'])[2]")
-                .end().endTestSuite();
+                .end()*/.endTestSuite();
     }
 }

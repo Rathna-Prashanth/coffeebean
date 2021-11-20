@@ -1,5 +1,6 @@
 package io.coffeebean.testsuite;
 
+import io.coffeebean.CoffeeBeanOptions;
 import io.coffeebean.bdd.report.CoffeeBeanReport;
 import io.coffeebean.bdd.report.internals.CoffeeBeanReportHandler;
 import io.coffeebean.browser.WebBrowser;
@@ -13,28 +14,28 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class SuiteHandler implements TestSuite {
+public class SuiteHandler implements ITestSuite {
 
     public CoffeeBeanReport mReport = new CoffeeBeanReportHandler();
     public WebDriver mDriver;
     public Boolean isFailure = false;
 
     @Override
-    public TestSuite createTestSuite(String suiteName) {
+    public ITestSuite createTestSuite(String suiteName) {
         EventLogs.log("Suite : " + suiteName);
         mReport.reportEngine(suiteName);
         return this;
     }
 
     @Override
-    public TestSuite createFeature(String featureName) {
+    public ITestSuite createFeature(String featureName) {
         EventLogs.log("Feature : " + featureName);
         mReport.reportCreateFeature(featureName);
         return this;
     }
 
     @Override
-    public TestSuite createScenario(WebBrowser browser, String scenarioName) {
+    public ITestSuite createScenario(WebBrowser browser, String scenarioName) {
         EventLogs.log("Scenario : " + scenarioName);
         mReport.reportCreateScenario(scenarioName, browser);
         switch (browser) {
@@ -42,6 +43,7 @@ public class SuiteHandler implements TestSuite {
                 EventLogs.log("Chrome Browser : " + scenarioName);
                 WebDriverManager.chromedriver().setup();
                 mDriver = new ChromeDriver();
+                mDriver.manage().window().maximize();
                 break;
             case FirefoxBrowser:
                 EventLogs.log("Firefox Browser : " + scenarioName);
@@ -53,6 +55,7 @@ public class SuiteHandler implements TestSuite {
                 WebDriverManager.edgedriver().setup();
                 mDriver = new EdgeDriver();
         }
+        this.mDriver.get(CoffeeBeanOptions.URL);
         return this;
     }
 
@@ -72,7 +75,7 @@ public class SuiteHandler implements TestSuite {
     }
 
     @Override
-    public TestSuite end() {
+    public ITestSuite end() {
         this.mDriver.quit();
         new DriverExtension(this).setIsFailure(false);
         return this;

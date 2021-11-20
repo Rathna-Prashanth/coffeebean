@@ -2,11 +2,11 @@ package io.coffeebean;
 
 import io.coffeebean.logging.LoggingHandler;
 import io.coffeebean.testsuite.SuiteHandler;
-import io.coffeebean.testsuite.TestSuite;
+import io.coffeebean.testsuite.ITestSuite;
 
 public interface CoffeeBean {
 
-    TestSuite testSuite = new SuiteHandler();
+    ITestSuite testSuite = new SuiteHandler();
 
     /**
      * Initialize coffeebean engine.
@@ -15,7 +15,7 @@ public interface CoffeeBean {
      *
      * @return TestSuite
      */
-    public static TestSuite initialize() {
+    public static ITestSuite initialize() {
         LoggingHandler.initialize();
         return testSuite;
     }
@@ -24,7 +24,7 @@ public interface CoffeeBean {
      * @param url URL of webpage to open
      * @return TestSuite
      */
-    public static TestSuite setURL(String url) {
+    public static ITestSuite setURL(String url) {
         CoffeeBeanOptions.URL = url;
         return testSuite;
     }

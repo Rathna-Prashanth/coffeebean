@@ -172,6 +172,7 @@ public final class InteractiveExtension extends DriverExtension implements Inter
                 return this;
             } catch (Exception e) {
                 EventLogs.log("Exception While switching the windows");
+                mSuite.isFailure = true;
                 return this;
             }
         } else {
@@ -189,6 +190,7 @@ public final class InteractiveExtension extends DriverExtension implements Inter
                 return this;
             } catch (Exception e) {
                 EventLogs.log("unable to navigate back to main webpage from frame" + e.getStackTrace());
+                mSuite.isFailure = true;
                 return this;
             }
         } else {
@@ -234,6 +236,12 @@ public final class InteractiveExtension extends DriverExtension implements Inter
 
     @Override
     public Interactive assertElementCustom(String locator, Consumer<WebElement> consumer) {
+        return this;
+    }
+
+    @Override
+    public Interactive moveToView(String locator) {
+        new ViewManager(this.mSuite).moveToView(getWebElement(locator));
         return this;
     }
 }
