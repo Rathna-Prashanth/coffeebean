@@ -13,7 +13,7 @@ import java.util.function.Function;
 
 import static org.junit.Assert.assertEquals;
 
-public class DriverExtension extends SuiteHandler {
+public class DriverExtension extends SuiteHandler implements io.coffeebean.interactions.Wait {
 
     protected WebDriver mDriver;
     protected Boolean isFailure = false;
@@ -151,5 +151,19 @@ public class DriverExtension extends SuiteHandler {
         mSuite.isFailure = false;
         getmDriver().quit();
         return mSuite;
+    }
+
+    @Override
+    public Interactive setCustomWait(int wait, int pollingTime) {
+        this.globalExplicitWait = wait;
+        this.globalPolling = pollingTime;
+        return new InteractiveExtension(mSuite);
+    }
+
+    @Override
+    public Interactive setGlobalWait() {
+        globalExplicitWait = 60;
+        globalPolling = 5;
+        return new InteractiveExtension(mSuite);
     }
 }
