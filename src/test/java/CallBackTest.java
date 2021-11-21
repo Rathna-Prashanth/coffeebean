@@ -23,6 +23,8 @@ public class CallBackTest {
                 .createStep("And:User click SDET")
 //                .moveToView("XPATH://h3[contains(text(),'SDET')]")
                 .click("XPATH://h3[contains(text(),'SDET')]")
+                .createStep("Then:User assert title")
+                .assertTitle("")
                 .end()
              /*   .createFeature("initCallBack")
                 .createScenario(WebBrowser.FirefoxBrowser, "Check Callback")

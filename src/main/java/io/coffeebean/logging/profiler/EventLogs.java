@@ -22,4 +22,8 @@ public final class EventLogs implements LoggingHandler {
     public static void log(String logDetail) {
         System.out.println(logDetail);
     }
+
+    public static void errLog(String logDetail) {
+        System.err.println(logDetail);
+    }
 }

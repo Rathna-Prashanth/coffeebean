@@ -22,11 +22,11 @@ public class ViewManager {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-                EventLogs.log("unable to scroll to element" + e.getStackTrace());
+                EventLogs.errLog("unable to scroll to element" + e.getStackTrace());
                 this.mSuite.isFailure = true;
             }
         } else {
-            EventLogs.log("Skipping switchToFrame");
+            EventLogs.errLog("Skipping switchToFrame");
             return new InteractiveExtension(mSuite);
         }
         return new InteractiveExtension(mSuite);

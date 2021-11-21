@@ -87,13 +87,13 @@ public class DriverExtension extends SuiteHandler implements io.coffeebean.inter
                 webElement.click();
                 return (Interactive) this;
             } catch (Exception e) {
-                EventLogs.log("Exception : " + e);
+                EventLogs.errLog("Exception : " + e);
                 mSuite.isFailure = true;
                 mSuite.mReport.reportStepExpection(e);
                 return (Interactive) this;
             }
         } else {
-            EventLogs.log("Skipping Click : " + locator.split(":")[1]);
+            EventLogs.errLog("Skipping Click : " + locator.split(":")[1]);
             return (Interactive) this;
         }
     }
@@ -104,13 +104,13 @@ public class DriverExtension extends SuiteHandler implements io.coffeebean.inter
                 waitForElement(locator).sendKeys(value);
                 return (Interactive) this;
             } catch (Exception e) {
-                EventLogs.log("Exception : " + e);
+                EventLogs.errLog("Exception : " + e);
                 mSuite.isFailure = true;
                 mSuite.mReport.reportStepExpection(e);
                 return (Interactive) this;
             }
         } else {
-            EventLogs.log("Skipping Sendkeys : " + locator.split(":")[1]);
+            EventLogs.errLog("Skipping Sendkeys : " + locator.split(":")[1]);
             return (Interactive) this;
         }
     }
@@ -121,13 +121,13 @@ public class DriverExtension extends SuiteHandler implements io.coffeebean.inter
                 assertEquals(expected, waitForElement(locator).getText());
                 return (Interactive) this;
             } catch (Exception e) {
-                EventLogs.log("Exception : " + e);
+                EventLogs.errLog("Exception : " + e);
                 mSuite.isFailure = true;
                 mSuite.mReport.reportStepExpection(e);
                 return (Interactive) this;
             }
         } else {
-            EventLogs.log("Skipping Assert : " + locator.split(":")[1]);
+            EventLogs.errLog("Skipping Assert : " + locator.split(":")[1]);
             return (Interactive) this;
         }
     }
@@ -142,7 +142,7 @@ public class DriverExtension extends SuiteHandler implements io.coffeebean.inter
             mSuite.mReport.createStep(stepName.split(":")[0],
                     stepName.split(":")[1]);
             mSuite.mReport.reportStepSkip();
-            EventLogs.log("Skiiping Step : " + stepName.split(":")[1]);
+            EventLogs.errLog("Skiiping Step : " + stepName.split(":")[1]);
             return new InteractiveExtension(mSuite);
         }
     }

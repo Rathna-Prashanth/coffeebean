@@ -2,6 +2,7 @@ package io.coffeebean.interactions;
 
 import io.coffeebean.logging.profiler.EventLogs;
 import io.coffeebean.testsuite.SuiteHandler;
+import org.junit.Assert;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchFrameException;
 import org.openqa.selenium.WebElement;
@@ -25,13 +26,13 @@ public final class InteractiveExtension extends DriverExtension implements Inter
                 select.selectByVisibleText(dropDownValue);
                 return this;
             } catch (Exception e) {
-                EventLogs.log("Exception : " + e);
+                EventLogs.errLog("Exception : " + e);
                 mSuite.isFailure = true;
                 mSuite.mReport.reportStepExpection(e);
                 return this;
             }
         } else {
-            EventLogs.log("Skipping selectDropDownByVisible : " + locator.split(":")[1]);
+            EventLogs.errLog("Skipping selectDropDownByVisible : " + locator.split(":")[1]);
             return this;
         }
     }
@@ -44,13 +45,13 @@ public final class InteractiveExtension extends DriverExtension implements Inter
                 select.selectByIndex(dropDownValue);
                 return this;
             } catch (Exception e) {
-                EventLogs.log("Exception : " + e);
+                EventLogs.errLog("Exception : " + e);
                 mSuite.isFailure = true;
                 mSuite.mReport.reportStepExpection(e);
                 return this;
             }
         } else {
-            EventLogs.log("Skipping selectDropDownByIndex : " + locator.split(":")[1]);
+            EventLogs.errLog("Skipping selectDropDownByIndex : " + locator.split(":")[1]);
             return this;
         }
     }
@@ -63,13 +64,13 @@ public final class InteractiveExtension extends DriverExtension implements Inter
                 select.selectByValue(dropDownValue);
                 return this;
             } catch (Exception e) {
-                EventLogs.log("Exception : " + e);
+                EventLogs.errLog("Exception : " + e);
                 mSuite.isFailure = true;
                 mSuite.mReport.reportStepExpection(e);
                 return this;
             }
         } else {
-            EventLogs.log("Skipping selectDropDownByValue : " + locator.split(":")[1]);
+            EventLogs.errLog("Skipping selectDropDownByValue : " + locator.split(":")[1]);
             return this;
         }
     }
@@ -82,13 +83,13 @@ public final class InteractiveExtension extends DriverExtension implements Inter
                 act.moveToElement(waitForElement(locator)).build().perform();
                 return this;
             } catch (Exception e) {
-                EventLogs.log("Exception : " + e);
+                EventLogs.errLog("Exception : " + e);
                 mSuite.isFailure = true;
                 mSuite.mReport.reportStepExpection(e);
                 return this;
             }
         } else {
-            EventLogs.log("Skipping MouseOver : " + locator.split(":")[1]);
+            EventLogs.errLog("Skipping MouseOver : " + locator.split(":")[1]);
             return this;
         }
     }
@@ -126,14 +127,14 @@ public final class InteractiveExtension extends DriverExtension implements Inter
                 EventLogs.log("Navigated to frame with id " + frame);
                 return this;
             } catch (NoSuchFrameException e) {
-                EventLogs.log("Unable to locate frame with id " + frame + e.getStackTrace());
+                EventLogs.errLog("Unable to locate frame with id " + frame + e.getStackTrace());
                 return this;
             } catch (Exception e) {
-                EventLogs.log("Unable to navigate to frame with id " + frame + e.getStackTrace());
+                EventLogs.errLog("Unable to navigate to frame with id " + frame + e.getStackTrace());
                 return this;
             }
         } else {
-            EventLogs.log("Skipping switchToFrame");
+            EventLogs.errLog("Skipping switchToFrame");
             return this;
         }
     }
@@ -146,14 +147,14 @@ public final class InteractiveExtension extends DriverExtension implements Inter
                 EventLogs.log("Navigated to frame with id " + frame);
                 return this;
             } catch (NoSuchFrameException e) {
-                EventLogs.log("Unable to locate frame with id " + frame + e.getStackTrace());
+                EventLogs.errLog("Unable to locate frame with id " + frame + e.getStackTrace());
                 return this;
             } catch (Exception e) {
-                EventLogs.log("Unable to navigate to frame with id " + frame + e.getStackTrace());
+                EventLogs.errLog("Unable to navigate to frame with id " + frame + e.getStackTrace());
                 return this;
             }
         } else {
-            EventLogs.log("Skipping switchToFrame");
+            EventLogs.errLog("Skipping switchToFrame");
             return this;
         }
     }
@@ -171,12 +172,12 @@ public final class InteractiveExtension extends DriverExtension implements Inter
                 }
                 return this;
             } catch (Exception e) {
-                EventLogs.log("Exception While switching the windows");
+                EventLogs.errLog("Exception While switching the windows");
                 mSuite.isFailure = true;
                 return this;
             }
         } else {
-            EventLogs.log("Skipping switchToFrame");
+            EventLogs.errLog("Skipping switchToFrame");
             return this;
         }
     }
@@ -189,12 +190,12 @@ public final class InteractiveExtension extends DriverExtension implements Inter
                 EventLogs.log("Navigated back to webpage from frame");
                 return this;
             } catch (Exception e) {
-                EventLogs.log("unable to navigate back to main webpage from frame" + e.getStackTrace());
+                EventLogs.errLog("unable to navigate back to main webpage from frame" + e.getStackTrace());
                 mSuite.isFailure = true;
                 return this;
             }
         } else {
-            EventLogs.log("Skipping switchToFrame");
+            EventLogs.errLog("Skipping switchToFrame");
             return this;
         }
     }
@@ -231,6 +232,16 @@ public final class InteractiveExtension extends DriverExtension implements Inter
 
     @Override
     public Interactive assertTitle(String title) {
+        if (!mSuite.isFailure) {
+            if (mDriver.getTitle().equals(title)) {
+                EventLogs.log("Validation passed with title : " + title);
+            } else {
+                EventLogs.errLog("Assert failed : Actual title "+mDriver.getTitle());
+                mSuite.isFailure = true;
+            }
+        } else {
+            EventLogs.errLog("Skipping assert title");
+        }
         return this;
     }
 
