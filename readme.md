@@ -33,7 +33,7 @@ Easy to use end to end testing solution for web application and websites with BD
 
 ## Documentation
 
-[CofeeBean Java Documentation](https://rathna-prashanth.github.io/coffeebean/)
+[CofeeBean 0.0.4-alpha Java Documentation](https://rathna-prashanth.github.io/coffeebean/)
 
 [CofeeBean Documentation](https://rathnaprashanth.com/coffeebean/)
 
