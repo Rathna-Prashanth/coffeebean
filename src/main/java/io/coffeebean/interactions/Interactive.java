@@ -28,7 +28,7 @@ public interface Interactive extends DropDown, Action, Frame, Window,MouseAction
 
     /**
      * Stepname for the scenario
-     *
+     * @deprecated Since version Coffeebean-0.0.5
      * @param stepName Stepname for the scenario.
      *                 Example: Given:User open the application,
      *                 And:User view login page

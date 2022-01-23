@@ -38,6 +38,20 @@ public interface ITestSuite {
     public Interactive createStep(String stepName);
 
     /**
+     * Gherkin Step Name
+     *
+     * @param stepName   Step Name example: Given:User open the application
+     * @param stepAction Step Action
+     * @return A self reference
+     */
+    public ITestSuite createStep(String stepName, Interactive stepAction);
+
+    /**
+     * @return Interactive actions with current driver
+     */
+    public Interactive getInteractive();
+
+    /**
      * End of scenario and listen to next scenario
      *
      * @return A self reference

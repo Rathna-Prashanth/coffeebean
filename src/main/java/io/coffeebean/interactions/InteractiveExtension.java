@@ -236,7 +236,7 @@ public final class InteractiveExtension extends DriverExtension implements Inter
             if (mDriver.getTitle().equals(title)) {
                 EventLogs.log("Validation passed with title : " + title);
             } else {
-                EventLogs.errLog("Assert failed : Actual title "+mDriver.getTitle());
+                EventLogs.errLog("Assert failed : Actual title " + mDriver.getTitle());
                 mSuite.isFailure = true;
             }
         } else {
@@ -254,5 +254,10 @@ public final class InteractiveExtension extends DriverExtension implements Inter
     public Interactive moveToView(String locator) {
         new ViewManager(this.mSuite).moveToView(getWebElement(locator));
         return this;
+    }
+
+    @Override
+    public Interactive getInteractive() {
+        return new InteractiveExtension(this);
     }
 }

@@ -75,6 +75,26 @@ public class SuiteHandler implements ITestSuite {
     }
 
     @Override
+    public ITestSuite createStep(String stepName, Interactive stepAction) {
+        if (!isFailure) {
+            EventLogs.log("Step : " + stepName);
+            mReport.createStep(stepName.split(":")[0], stepName.split(":")[1]);
+            return this;
+        } else {
+            mReport.createStep(stepName.split(":")[0],
+                    stepName.split(":")[1]);
+            mReport.reportStepSkip();
+            EventLogs.log("Skiiping Step : " + stepName.split(":")[1]);
+            return this;
+        }
+    }
+
+    @Override
+    public Interactive getInteractive() {
+        return new InteractiveExtension(this);
+    }
+
+    @Override
     public ITestSuite end() {
         this.mDriver.quit();
         new DriverExtension(this).setIsFailure(false);
