@@ -19,9 +19,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CoffeeBeanReportHandler implements CoffeeBeanReport {
-    private static String ReportPath, WorkingDirectory, ReportDirectory;
+    private static String reportPath, workingDirectory, reportDirectory;
     private static boolean isWindowsHost = false;
-    // public static ExtentHtmlReporter reporter;
+//    public static ExtentHtmlReporter reporter;
     public static ExtentReports extent;
     private ExtentTest feature;
     private ExtentTest scenario, step;
@@ -38,15 +38,15 @@ public class CoffeeBeanReportHandler implements CoffeeBeanReport {
 
     @Override
     public ExtentReports reportEngine(String suiteName) {
-        ReportPath = Paths.get("").toAbsolutePath() + "/test-output/Coffeebean/index.html";
-        WorkingDirectory = System.getProperty("user.dir");
-        ReportDirectory = Paths.get("").toAbsolutePath() + "/test-output/Coffeebean/";
+        reportPath = Paths.get("").toAbsolutePath() + "/test-output/Coffeebean/index.html";
+        workingDirectory = System.getProperty("user.dir");
+        reportDirectory = Paths.get("").toAbsolutePath() + "/test-output/Coffeebean/";
         extent = new ExtentReports();
         // reporter = new ExtentHtmlReporter(ReportPath);
-        ExtentSparkReporter spark = new ExtentSparkReporter(ReportDirectory + "index.html");
-        ExtentSparkReporter sparkFail = new ExtentSparkReporter(ReportDirectory + "Coffeebean-Fail.html").filter()
+        ExtentSparkReporter spark = new ExtentSparkReporter(reportDirectory + "index.html");
+        ExtentSparkReporter sparkFail = new ExtentSparkReporter(reportDirectory + "Coffeebean-Fail.html").filter()
                 .statusFilter().as(new Status[]{Status.FAIL}).apply();
-        ExtentSparkReporter sparkDashboard = new ExtentSparkReporter(ReportDirectory + "Coffeebean-Dashboard.html")
+        ExtentSparkReporter sparkDashboard = new ExtentSparkReporter(reportDirectory + "Coffeebean-Dashboard.html")
                 .viewConfigurer().viewOrder().as(new ViewName[]{ViewName.DASHBOARD, ViewName.TEST, ViewName.CATEGORY,
                         ViewName.AUTHOR, ViewName.DEVICE, ViewName.EXCEPTION, ViewName.LOG})
                 .apply();
@@ -62,7 +62,7 @@ public class CoffeeBeanReportHandler implements CoffeeBeanReport {
     public void changeReporConfig() {
         if (isWindowsHost) {
             try {
-                File report = new File(ReportPath);
+                File report = new File(reportPath);
                 Scanner myReader = new Scanner(report);
                 while (myReader.hasNextLine()) {
                     String data = myReader.nextLine();
@@ -77,8 +77,8 @@ public class CoffeeBeanReportHandler implements CoffeeBeanReport {
         } else {
             StringBuilder contentBuilder = new StringBuilder();
             try {
-                System.out.println(ReportPath);
-                BufferedReader in = new BufferedReader(new FileReader(ReportPath));
+                System.out.println(reportPath);
+                BufferedReader in = new BufferedReader(new FileReader(reportPath));
                 String str;
                 while ((str = in.readLine()) != null) {
                     contentBuilder.append(str);
@@ -97,7 +97,7 @@ public class CoffeeBeanReportHandler implements CoffeeBeanReport {
 //            System.out.println(content);
             FileOutputStream fs = null;
             try {
-                fs = new FileOutputStream(ReportDirectory + "index.html");
+                fs = new FileOutputStream(reportDirectory + "index.html");
                 OutputStreamWriter out = new OutputStreamWriter(fs);
                 out.write(content);
                 out.close();
@@ -129,8 +129,8 @@ public class CoffeeBeanReportHandler implements CoffeeBeanReport {
     }
 
     @Override
-    public void reportFeatureLogFatal(String Info) {
-        feature.log(Status.WARNING, Info);
+    public void reportFeatureLogFatal(String info) {
+        feature.log(Status.WARNING, info);
     }
 
     @Override
@@ -144,15 +144,15 @@ public class CoffeeBeanReportHandler implements CoffeeBeanReport {
     }
 
     @Override
-    public void reportCreateScenario(String Scenario, WebBrowser browser) {
-        scenario = feature.createNode(Scenario.class, Scenario);
-        scenario.assignAuthor("CoffeeBean Report");
-        scenario.assignDevice(browser.toString());
+    public void reportCreateScenario(String scenario, WebBrowser browser) {
+        this.scenario = feature.createNode(Scenario.class, scenario);
+        this.scenario.assignAuthor("CoffeeBean Report");
+        this.scenario.assignDevice(browser.toString());
     }
 
     @Override
-    public void reportScenarioLogJSON(String Json) {
-        scenario.info(MarkupHelper.createCodeBlock(Json, CodeLanguage.JSON));
+    public void reportScenarioLogJSON(String json) {
+        scenario.info(MarkupHelper.createCodeBlock(json, CodeLanguage.JSON));
     }
 
     @Override
@@ -168,23 +168,23 @@ public class CoffeeBeanReportHandler implements CoffeeBeanReport {
     }
 
     @Override
-    public void reportScenarioPass(String Details, String s) {
-        scenario.pass(Details, MediaEntityBuilder.createScreenCaptureFromBase64String(s).build());
+    public void reportScenarioPass(String details, String s) {
+        scenario.pass(details, MediaEntityBuilder.createScreenCaptureFromBase64String(s).build());
     }
 
     @Override
-    public void reportScenarioPass(String Details) {
-        scenario.pass(Details);
+    public void reportScenarioPass(String details) {
+        scenario.pass(details);
     }
 
     @Override
-    public void reportScenarioFail(String Details) {
-        scenario.fail(Details);
+    public void reportScenarioFail(String details) {
+        scenario.fail(details);
     }
 
     @Override
-    public void reportScenarioFail(String Details, String s) {
-        scenario.fail(Details, MediaEntityBuilder.createScreenCaptureFromBase64String(s).build());
+    public void reportScenarioFail(String details, String s) {
+        scenario.fail(details, MediaEntityBuilder.createScreenCaptureFromBase64String(s).build());
     }
 
     @Override
@@ -217,8 +217,8 @@ public class CoffeeBeanReportHandler implements CoffeeBeanReport {
     }
 
     @Override
-    public void reportStepLogJSON(String Json) {
-        step.info(MarkupHelper.createCodeBlock(Json, CodeLanguage.JSON));
+    public void reportStepLogJSON(String json) {
+        step.info(MarkupHelper.createCodeBlock(json, CodeLanguage.JSON));
     }
 
     @Override
@@ -234,23 +234,23 @@ public class CoffeeBeanReportHandler implements CoffeeBeanReport {
     }
 
     @Override
-    public void reportStepPass(String Details, String s) {
-        step.pass(Details, MediaEntityBuilder.createScreenCaptureFromBase64String(s).build());
+    public void reportStepPass(String details, String s) {
+        step.pass(details, MediaEntityBuilder.createScreenCaptureFromBase64String(s).build());
     }
 
     @Override
-    public void reportStepPass(String Details) {
-        step.pass(Details);
+    public void reportStepPass(String details) {
+        step.pass(details);
     }
 
     @Override
-    public void reportStepFail(String Details) {
-        step.fail(Details);
+    public void reportStepFail(String details) {
+        step.fail(details);
     }
 
     @Override
-    public void reportStepFail(String Details, String s) {
-        step.fail(Details, MediaEntityBuilder.createScreenCaptureFromBase64String(s).build());
+    public void reportStepFail(String details, String s) {
+        step.fail(details, MediaEntityBuilder.createScreenCaptureFromBase64String(s).build());
     }
 
     @Override

@@ -1,7 +1,6 @@
 package io.coffeebean.bdd.report;
 
 import com.aventstack.extentreports.ExtentReports;
-import io.coffeebean.CoffeeBeanOptions;
 import io.coffeebean.browser.WebBrowser;
 
 import java.util.List;
@@ -14,45 +13,45 @@ public interface CoffeeBeanReport {
 
     void reportFeatureLogPass(String info);
 
-    void reportFeatureLogFatal(String Info);
+    void reportFeatureLogFatal(String info);
 
     void reportFeatureLogList(List<Object> items);
 
     void reportFeatureAssignCategory(String category);
 
-    void reportCreateScenario(String Detail, WebBrowser browser);
+    void reportCreateScenario(String detail, WebBrowser browser);
 
-    void reportScenarioLogJSON(String Json);
+    void reportScenarioLogJSON(String json);
 
     void reportScenarioLogLabelColor(String info);
 
     void reportScenarioCategory(String[] category);
 
-    void reportScenarioPass(String Details, String s);
+    void reportScenarioPass(String details, String s);
 
-    void reportScenarioPass(String Details);
+    void reportScenarioPass(String details);
 
-    void reportScenarioFail(String Details);
+    void reportScenarioFail(String details);
 
-    void reportScenarioFail(String Details, String s);
+    void reportScenarioFail(String details, String s);
 
     void reportScenarioExpection(Exception e);
 
     void createStep(String keyword, String stepName);
 
-    void reportStepLogJSON(String Json);
+    void reportStepLogJSON(String json);
 
     void reportStepLogLabelColor(String info);
 
     void reportStepCategory(String[] category);
 
-    void reportStepPass(String Details, String s);
+    void reportStepPass(String details, String s);
 
-    void reportStepPass(String Details);
+    void reportStepPass(String details);
 
-    void reportStepFail(String Details);
+    void reportStepFail(String details);
 
-    void reportStepFail(String Details, String s);
+    void reportStepFail(String details, String s);
 
     void reportStepSkip();
 

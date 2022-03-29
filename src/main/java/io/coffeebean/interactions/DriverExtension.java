@@ -41,7 +41,7 @@ public class DriverExtension extends SuiteHandler implements io.coffeebean.inter
 
     protected void setmDriver(WebDriver mDriver) {
         this.mDriver = mDriver;
-        this.mDriver.get(CoffeeBeanOptions.URL);
+        this.mDriver.get(CoffeeBeanOptions.url);
     }
 
     protected WebDriver getmDriver() {

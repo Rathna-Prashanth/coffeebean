@@ -4,11 +4,11 @@ public class CoffeeBeanOptions {
     /**
      * URL of webpage to open
      */
-    public static String URL;
+    public static String url;
     /**
      * Location of testdata file. Example: D:java/test.xlsx
      */
-    public static String TestDataPath;
+    public static String testDataPath;
 
     /**
      * Name of the browser / device

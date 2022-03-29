@@ -55,7 +55,7 @@ public class SuiteHandler implements ITestSuite {
                 WebDriverManager.edgedriver().setup();
                 mDriver = new EdgeDriver();
         }
-        this.mDriver.get(CoffeeBeanOptions.URL);
+        this.mDriver.get(CoffeeBeanOptions.url);
         return this;
     }
 

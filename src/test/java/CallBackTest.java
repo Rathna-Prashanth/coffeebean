@@ -9,7 +9,7 @@ public class CallBackTest {
     @Test
     @Ignore
     public void initCallBack() {
-        CoffeeBeanOptions.URL = "https://www.google.co.in/";
+        CoffeeBeanOptions.url = "https://www.google.co.in/";
         CoffeeBeanOptions.deviceName = "Windows Browser";
         CoffeeBean.initialize()
                 .createTestSuite("CoffeeBean Unit Test")

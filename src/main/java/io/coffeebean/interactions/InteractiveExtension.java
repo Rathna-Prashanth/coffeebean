@@ -211,12 +211,12 @@ public final class InteractiveExtension extends DriverExtension implements Inter
     }
 
     @Override
-    public Interactive SelectCheckboxes(String... locator) {
+    public Interactive selectCheckboxes(String... locator) {
         return this;
     }
 
     @Override
-    public Interactive SelectCheckbox(String locator) {
+    public Interactive selectCheckbox(String locator) {
         return this;
     }
 

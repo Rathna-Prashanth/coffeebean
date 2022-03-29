@@ -25,7 +25,7 @@ public interface CoffeeBean {
      * @return TestSuite
      */
     public static ITestSuite setURL(String url) {
-        CoffeeBeanOptions.URL = url;
+        CoffeeBeanOptions.url = url;
         return testSuite;
     }
 }

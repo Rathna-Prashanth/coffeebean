@@ -10,7 +10,7 @@ public class CallBackFixTest {
     @Test
     @Ignore
     public void initCallBack() {
-        CoffeeBeanOptions.URL = "https://www.google.co.in/";
+        CoffeeBeanOptions.url = "https://www.google.co.in/";
         CoffeeBeanOptions.deviceName = "Windows Browser";
         ITestSuite eye = CoffeeBean.initialize();
         Interactive actions = eye.getInteractive();

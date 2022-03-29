@@ -17,11 +17,11 @@ public interface MouseAction {
      * @param locator Element to interact
      * @return A self reference
      */
-    Interactive SelectCheckboxes(String... locator);
+    Interactive selectCheckboxes(String... locator);
 
     /**
      * @param locator Element to interact
      * @return A self reference
      */
-    Interactive SelectCheckbox(String locator);
+    Interactive selectCheckbox(String locator);
 }
